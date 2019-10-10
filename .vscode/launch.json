@@ -20,7 +20,7 @@
             "name": "(Windows) Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Debug/bin/parcel.exe",
+            "program": "${workspaceFolder}/build/Debug/bin/Debug/parcel.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build/",
