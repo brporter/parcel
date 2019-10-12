@@ -30,9 +30,9 @@ public:
     Block& operator=(const Block&) noexcept;  // copy assignment
     Block& operator=(Block&&) noexcept;       // move assignment
 
-    enum BlockType type();
-    std::uint32_t length();
-    std::shared_ptr<std::uint8_t> body();
+    enum BlockType type() const;
+    std::uint32_t length() const;
+    std::shared_ptr<std::uint8_t> body() const;
 
 private:
     enum BlockType _blockType;

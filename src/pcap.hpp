@@ -16,6 +16,8 @@ public:
     PCap& operator=(const PCap&);  // copy assignment
     PCap& operator=(PCap&&);       // move assignment
 
+    const std::vector<const Block>& blocks();
+
 private:
     uint16_t readChunk16(std::basic_ifstream<uint8_t>&);
     uint32_t readChunk32(std::basic_ifstream<uint8_t>&);
