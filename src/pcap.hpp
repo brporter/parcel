@@ -2,48 +2,26 @@
 #define PCAP_HPP
 
 #include <string>
+#include <vector>
+#include "block.hpp"
 
-namespace parcel
-{
-    class PCap
-    {
-        public:
-            PCap() = delete; // default
-            PCap(const std::wstring&); // standard
-            PCap(const PCap&); // copy
-            PCap(PCap&&); // move
+namespace parcel {
+class PCap {
+public:
+    PCap() = delete;            // default
+    PCap(const std::wstring&);  // standard
+    PCap(const PCap&);          // copy
+    PCap(PCap&&);               // move
 
+    PCap& operator=(const PCap&);  // copy assignment
+    PCap& operator=(PCap&&);       // move assignment
 
-            PCap& operator=(const PCap&); // copy assignment
-            PCap& operator=(PCap&&); // move assignment
-            
+private:
+    uint16_t readChunk16(std::basic_ifstream<uint8_t>&);
+    uint32_t readChunk32(std::basic_ifstream<uint8_t>&);
 
-            std::wstring captureHardware();
-            std::wstring captureOs();
-            std::wstring captureApp();
+    std::vector<Block> _blocks;
+};
 
-            uint16_t majorVersion();
-            uint16_t minorVersion();
-
-
-        private:
-            uint16_t readChunk(std::basic_ifstream<char>&);
-
-
-std::uint32_t read_chunk(std::basic_ifstream<char> &ifs)
-{
-    std::uint32_t value;
-    ifs.read(reinterpret_cast<char*>(&value), 4);
-
-    return value;
-}
-
-            uint16_t _majorVersion;
-            uint16_t _minorVersion;
-            std::wstring _captureHardware;
-            std::wstring _captureOs;
-            std::wstring _captureApp;
-    };
-
-} // namespace parcel
+}  // namespace parcel
 #endif

@@ -3,7 +3,6 @@
 
 using namespace parcel;
 
-
 PCap::PCap(const std::wstring& file)
 {
     // standard
@@ -11,41 +10,21 @@ PCap::PCap(const std::wstring& file)
 
 PCap::PCap(const PCap& other)
 {
-    // copy 
-    _captureHardware = other._captureHardware;
-    _captureApp = other._captureApp;
-    _captureOs = other._captureOs;
-
-    _majorVersion = other._majorVersion;
-    _minorVersion = other._minorVersion;
+    // copy
+    _blocks = other._blocks;
 }
 
 PCap::PCap(PCap&& other)
 {
-    // move 
-    _captureHardware = other._captureHardware;
-    _captureApp = other._captureApp;
-    _captureOs = other._captureOs;
-
-    _majorVersion = other._majorVersion;
-    _minorVersion = other._minorVersion;
-
-    other._captureHardware.clear();
-    other._captureApp.clear();
-    other._captureOs.clear();
-    other._minorVersion = 0;
-    other._majorVersion = 0;
+    // move
+    // TODO: this is actually doing a copy
+    _blocks = other._blocks;
 }
 
 PCap& PCap::operator=(const PCap& other)
 {
     // copy assignment
-    _captureHardware = other._captureHardware;
-    _captureApp = other._captureApp;
-    _captureOs = other._captureOs;
-
-    _majorVersion = other._majorVersion;
-    _minorVersion = other._minorVersion;
+    _blocks = other._blocks;
 
     return *this;
 }
@@ -53,41 +32,26 @@ PCap& PCap::operator=(const PCap& other)
 PCap& PCap::operator=(PCap&& other)
 {
     // move assignment
-    if (this != &other)
-    {
-        _captureHardware = other._captureHardware;
-        _captureApp = other._captureApp;
-        _captureOs = other._captureOs;
-
-        _majorVersion = other._majorVersion;
-        _minorVersion = other._minorVersion;
-    
-        other._captureHardware.clear();
-        other._captureApp.clear();
-        other._captureOs.clear();
-        other._minorVersion = 0;
-        other._majorVersion = 0;
+    if (this != &other) {
+        _blocks = other._blocks;  // TODO: this is copying not moving
     }
 
     return *this;
 }
-           
-std::wstring PCap::captureHardware()
+
+uint16_t PCap::readChunk16(std::basic_ifstream<uint8_t>& ifs)
 {
+    std::uint32_t value;
+    ifs.read(reinterpret_cast<uint8_t*>(&value), 2);
+
+    return value;
 }
 
-std::wstring PCap::captureOs()
+uint32_t PCap::readChunk32(std::basic_ifstream<uint8_t>& ifs)
 {
+    std::uint32_t value;
+    ifs.read(reinterpret_cast<uint8_t*>(&value), 4);
+
+    return value;
 }
 
-std::wstring PCap::captureApp()
-{
-}
-
-uint16_t PCap::majorVersion()
-{
-}
-
-uint16_t PCap::minorVersion()
-{
-}
