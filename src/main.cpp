@@ -1,11 +1,10 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 #define BLOCK_TYPE_LENGTH 4
 #define BLOCK_LENGTH_LENGTH 4
 
-
-std::uint32_t read_chunk(std::basic_ifstream<char> &ifs)
+std::uint32_t read_chunk(std::basic_ifstream<char>& ifs)
 {
     std::uint32_t value;
     ifs.read(reinterpret_cast<char*>(&value), 4);
@@ -15,16 +14,14 @@ std::uint32_t read_chunk(std::basic_ifstream<char> &ifs)
 
 int main(int argc, char** argv)
 {
-    if (argc != 2)
-    {
+    if (argc != 2) {
         std::wcerr << L"Usage: " << argv[0] << " [filename]" << std::endl;
         return 1;
     }
 
     std::ifstream file(argv[1], std::ifstream::binary);
 
-    while (file)
-    {
+    while (file) {
         uint32_t blockType = read_chunk(file);
         uint32_t blockLength = read_chunk(file);
 

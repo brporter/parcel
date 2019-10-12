@@ -1,3 +1,4 @@
 *.swp
 build/
 *.dSYM/
+compile_commands.json
