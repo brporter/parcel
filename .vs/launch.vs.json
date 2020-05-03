@@ -1,0 +1,13 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "parcel.exe (Debug\\bin\\parcel.exe)",
+      "name": "parcel.exe (Debug\\bin\\parcel.exe)",
+      "args": ["..\\..\\..\\..\\..\\samples\\sample.pcapng"]
+    }
+  ]
+}
