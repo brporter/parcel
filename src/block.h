@@ -1,11 +1,13 @@
-#ifndef BLOCK_HPP
-#define BLOCK_HPP
+#ifndef BLOCK_H
+#define BLOCK_H
 
 #include <cstdint>
 #include <memory>
 
 namespace parcel {
-enum class BlockType {
+enum class BlockType 
+    : std::uint32_t
+{
     Reserved = 0x00000000,
     InterfaceDescription = 0x00000001,
     Packet = 0x00000002,
@@ -21,8 +23,14 @@ enum class BlockType {
 };
 
 class Block {
+private:
+    enum BlockType _blockType;
+    std::uint32_t _blockLength;
+    std::unique_ptr<std::uint8_t> _blockBody;
+
 public:
     Block() = delete;
+    Block(BlockType type, std::uint32_t length, std::unique_ptr<std::uint8_t> blockBody);
     Block(const Block&);  // copy
     Block(Block&&);       // move
     ~Block();
@@ -32,12 +40,7 @@ public:
 
     enum BlockType type() const;
     std::uint32_t length() const;
-    std::shared_ptr<std::uint8_t> body() const;
-
-private:
-    enum BlockType _blockType;
-    std::uint32_t _blockLength;
-    std::uint8_t _blockBody[];
+    const std::uint8_t* body() const;
 };
 }  // namespace parcel
 
