@@ -28,7 +28,11 @@ int main(int argc, char** argv)
     // std::wstring fileName = converter.from_bytes(argv[1]);
 
     // parcel::PCap p(fileName);
-    parcel::PCap p(argv[1]);
+
+    std::unique_ptr<std::ifstream> file = std::make_unique<std::ifstream>(argv[1], std::ifstream::binary);
+    // std::ifstream file(argv[1], std::ifstream::binary);
+
+    parcel::PCap p(std::move(file));
 
     auto b = p.block();
 
@@ -44,7 +48,7 @@ int main(int argc, char** argv)
 
     // std::wcout << "Block Type: " << b->type() << std::endl;
 
-    // std::ifstream file(argv[1], std::ifstream::binary);
+    // 
 
     // while (file) {
     //     uint32_t blockType = read_chunk(file, BLOCK_TYPE_LENGTH);

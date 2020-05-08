@@ -9,9 +9,10 @@
 namespace parcel {
 class PCap {
 public:
-    PCap() = delete;            // default
-    PCap(const char*);  // standard
-    PCap(const PCap&);          // copy
+    PCap() = delete;                // default
+    PCap(const PCap&) = delete;     // copy
+
+    PCap(std::unique_ptr<std::ifstream> &&); // standard
     PCap(PCap&&);               // move
 
     PCap& operator=(const PCap&);  // copy assignment
@@ -21,11 +22,11 @@ public:
     std::unique_ptr<Block> block() noexcept;
 
 private:
-    std::uint16_t readChunk16(std::basic_ifstream<std::uint8_t>&);
-    std::uint32_t readChunk32(std::basic_ifstream<std::uint8_t>&);
-    std::uint8_t* readBlock(std::basic_ifstream<std::uint8_t>&, std::int32_t);
+    std::uint16_t readChunk16(std::ifstream&);
+    std::uint32_t readChunk32(std::ifstream&);
+    std::uint8_t* readBlock(std::ifstream&, std::int32_t);
 
-    std::basic_ifstream<std::uint8_t> _ifs;
+    std::unique_ptr<std::ifstream> _ifs;
 
     std::vector<Block> _blocks;
 };
